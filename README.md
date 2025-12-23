@@ -1,220 +1,200 @@
-# ChatMate - Your On-the-Go AI Companion
+# ChatMate - AI Companion Mobile App
 
-A mobile-first AI chatbot app built with React Native CLI, featuring voice input/output, conversation history, and premium features.
+> **Think out loud. Get answers. Talk it through.**
 
-## Features
+A cross-platform AI chatbot mobile app with text & voice conversations, conversation history, and premium features.
 
-- 🤖 **AI Chat Interface**: Conversational chat with GPT models
-- 🎤 **Voice Messaging**: Voice-to-text and text-to-speech capabilities
-- 🔐 **Authentication**: Supabase Auth with email/password and guest mode
-- 📝 **Chat History**: Save, search, and manage conversations
-- 🌙 **Dark/Light Mode**: Customizable themes
-- 💎 **Premium Features**: Subscription-based unlimited access (optional)
+![Expo](https://img.shields.io/badge/Expo-SDK%2054-blue)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.109-green)
+![Firebase](https://img.shields.io/badge/Firebase-Auth%20%26%20Firestore-orange)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
-## Tech Stack
+## ✨ Features
 
-- **Frontend**: React Native CLI + Redux Toolkit
-- **AI Backend**: OpenAI API integration
-- **Auth & Database**: Supabase Auth + Postgres
-- **Voice**: react-native-tts + @react-native-voice/voice
-- **Navigation**: React Navigation 6
-- **State Management**: Redux Toolkit
+### Core Features
 
-## Prerequisites
+- 💬 **AI Chat** - Intelligent conversations powered by Google Gemini
+- 🎙️ **Voice Input** - Speak your messages with microphone
+- 🔊 **Voice Output** - Listen to AI responses (Text-to-Speech)
+- 🧠 **Personality Modes** - Choose Friendly, Professional, or Tutor style
+- 📜 **Chat History** - Resume conversations anytime
+- 🔐 **Secure Auth** - Firebase authentication with guest mode
 
-- Node.js (>= 18)
-- React Native CLI
-- Android Studio (for Android development)
-- Xcode (for iOS development)
-- Supabase account
-- OpenAI API key
+### Bonus Features
 
-## Installation
+- 📤 Chat export (Text/Markdown)
+- ✏️ Conversation rename
+- 🌙 Dark mode
+- ⚡ Rate limiting with premium tiers
 
-1. **Clone and install dependencies**:
+## 🛠️ Tech Stack
+
+### Mobile App
+
+- **Framework**: Expo (React Native) SDK 54
+- **Language**: TypeScript
+- **Navigation**: Expo Router
+- **Styling**: NativeWind (Tailwind CSS)
+- **State**: Redux Toolkit
+- **Voice**: expo-speech + expo-av
+
+### Backend
+
+- **Framework**: FastAPI (Python)
+- **AI**: Google Gemini API (Free!)
+- **Database**: Firebase Firestore
+- **Auth**: Firebase Authentication
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- Python 3.11+
+- Expo Go app (v54) on your device
+- Firebase project with Authentication & Firestore enabled
+- Google Gemini API key (free at <https://aistudio.google.com/app/apikey>)
+
+### Mobile App Setup
+
 ```bash
+# Navigate to project
+cd ChatMate
+
+# Install dependencies
 npm install
+
+# Copy environment file
+cp .env.example .env
+# Edit .env with your Firebase config and API URL
+
+# Start development server
+npm run start
 ```
 
-2. **Install iOS dependencies** (iOS only):
+Scan the QR code with Expo Go app.
+
+### Backend Setup
+
 ```bash
-cd ios && pod install && cd ..
+# Navigate to backend
+cd backend
+
+# Create virtual environment
+python -m venv venv
+
+# Activate (Windows)
+.\venv\Scripts\activate
+
+# Activate (macOS/Linux)
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Copy environment file
+cp .env.example .env
+# Edit .env with your API keys
+
+# Start server (use your local IP for mobile testing)
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-3. **Configure environment variables**:
+API docs available at <http://localhost:8000/docs>
 
-Create your Supabase project and get your credentials:
-- Go to [Supabase](https://supabase.com)
-- Create a new project
-- Go to Settings > API to get your URL and anon key
+## 📱 Environment Variables
 
-Update `src/config/supabase.ts`:
-```typescript
-const supabaseUrl = 'YOUR_SUPABASE_URL';
-const supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY';
-```
-
-Get your OpenAI API key:
-- Go to [OpenAI](https://platform.openai.com)
-- Create an API key
-
-Update `src/config/openai.ts`:
-```typescript
-const OPENAI_API_KEY = 'YOUR_OPENAI_API_KEY';
-```
-
-4. **Set up Supabase database**:
-
-Run the SQL commands in `supabase-schema.sql` in your Supabase SQL editor to create the necessary tables and policies.
-
-5. **Configure permissions** (Android):
-
-Add these permissions to `android/app/src/main/AndroidManifest.xml`:
-```xml
-<uses-permission android:name="android.permission.RECORD_AUDIO" />
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-```
-
-6. **Configure permissions** (iOS):
-
-Add these permissions to `ios/ChatMate/Info.plist`:
-```xml
-<key>NSMicrophoneUsageDescription</key>
-<string>This app needs access to microphone for voice input</string>
-<key>NSSpeechRecognitionUsageDescription</key>
-<string>This app needs access to speech recognition for voice input</string>
-```
-
-## Running the App
-
-### Android
-```bash
-npm run android
-```
-
-### iOS
-```bash
-npm run ios
-```
-
-### Start Metro bundler
-```bash
-npm start
-```
-
-## Project Structure
+### Mobile App (.env)
 
 ```
-src/
-├── config/          # Configuration files
-│   ├── supabase.ts   # Supabase client setup
-│   └── openai.ts     # OpenAI API integration
-├── screens/          # Screen components
-│   ├── SplashScreen.tsx
-│   ├── AuthScreen.tsx
-│   ├── ChatScreen.tsx
-│   ├── HistoryScreen.tsx
-│   └── SettingsScreen.tsx
-├── store/            # Redux store and slices
-│   ├── index.ts
-│   └── slices/
-│       ├── authSlice.ts
-│       ├── chatSlice.ts
-│       └── settingsSlice.ts
-├── styles/           # Theme and styling
-│   └── theme.ts
-└── types/            # TypeScript type definitions
-    └── index.ts
+EXPO_PUBLIC_API_URL=http://YOUR_LOCAL_IP:8000
+EXPO_PUBLIC_FIREBASE_API_KEY=your_key
+EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN=project.firebaseapp.com
+EXPO_PUBLIC_FIREBASE_PROJECT_ID=your-project
+EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET=project.appspot.com
+EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=123456789
+EXPO_PUBLIC_FIREBASE_APP_ID=1:123:web:abc
 ```
 
-## Key Features Implementation
+### Backend (.env)
 
-### Authentication
-- Email/password authentication via Supabase Auth
-- Guest mode for local-only usage
-- Automatic session management
-
-### AI Chat
-- Direct OpenAI API integration
-- Message history with Supabase Postgres
-- Real-time typing indicators
-- Markdown support for AI responses
-
-### Voice Features
-- Voice-to-text using @react-native-voice/voice
-- Text-to-speech using react-native-tts
-- Visual feedback during recording
-- Auto-play AI responses
-
-### Data Management
-- Row Level Security (RLS) with Supabase
-- Efficient message storage and retrieval
-- User-specific chat isolation
-
-## Customization
-
-### Themes
-Modify `src/styles/theme.ts` to customize colors, spacing, and typography.
-
-### AI Model
-Change the OpenAI model in `src/config/openai.ts`:
-```typescript
-model: 'gpt-4', // or 'gpt-3.5-turbo'
+```
+GEMINI_API_KEY=AIza...
+FIREBASE_PROJECT_ID=your-project
+FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+FIREBASE_CLIENT_EMAIL=firebase-adminsdk@project.iam.gserviceaccount.com
 ```
 
-### Voice Settings
-Configure TTS and STT settings in the respective screen components.
+## 🗂️ Project Structure
 
-## Deployment
-
-### Android
-```bash
-cd android
-./gradlew assembleRelease
+```
+ChatMate/
+├── app/                    # Expo Router screens
+│   ├── (auth)/            # Auth screens (onboarding, login, signup)
+│   ├── (main)/            # Main app screens
+│   │   ├── chat/          # Chat screens
+│   │   ├── history/       # History screen
+│   │   └── settings/      # Settings screen
+├── components/            # Reusable components
+├── store/                 # Redux slices (auth, chat, settings)
+├── services/              # API, Firebase, Voice services
+├── hooks/                 # Custom hooks (useAuth, useVoice, useRedux)
+├── types/                 # TypeScript types
+└── backend/               # FastAPI backend
+    ├── app/
+    │   ├── routers/       # API endpoints (auth, chat, usage)
+    │   ├── services/      # Business logic (AI, Firebase, prompts)
+    │   ├── models/        # Pydantic schemas
+    │   └── middleware/    # Rate limiting
+    └── requirements.txt
 ```
 
-### iOS
-1. Open `ios/ChatMate.xcworkspace` in Xcode
-2. Select your team and provisioning profile
-3. Archive and upload to App Store Connect
+## 🔌 API Endpoints
 
-## Troubleshooting
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/auth/verify` | Verify Firebase token |
+| POST | `/chat/message` | Send message, get AI response |
+| GET | `/chat/history` | Get user's chat history |
+| GET | `/usage/status` | Get usage limits |
+| GET | `/health` | Health check |
 
-### Common Issues
+## 🎨 Features Walkthrough
 
-1. **Metro bundler issues**:
-```bash
-npm start -- --reset-cache
-```
+The app features a modern dark UI with:
 
-2. **Android build issues**:
-```bash
-cd android && ./gradlew clean && cd ..
-```
+- **Onboarding** - Welcome screen with AI tone selection (Friendly/Professional/Tutor)
+- **Authentication** - Email/password signup or continue as Guest
+- **Chat Interface** - Send text messages, receive AI responses with typing indicators
+- **Voice Input** - Hold the mic button to record voice messages
+- **Voice Output** - Tap speaker icon to hear AI responses
+- **History** - View all past conversations, tap to resume
+- **Settings** - Change AI tone, toggle dark mode, voice settings, export chats
 
-3. **iOS build issues**:
-```bash
-cd ios && pod install && cd ..
-```
+## � Troubleshooting
 
-4. **Voice recognition not working**:
-- Check microphone permissions
-- Ensure device has internet connection
-- Test on physical device (not simulator)
+### Mobile app can't connect to backend
 
-## Contributing
+- Ensure your phone and computer are on the same WiFi network
+- Use your computer's local IP address (not localhost) in the mobile `.env`
+- Run backend with `--host 0.0.0.0` flag
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+### Gemini API quota exceeded
 
-## License
+- Free tier has rate limits; wait a minute and try again
+- Or create a new API key at <https://aistudio.google.com/app/apikey>
 
-This project is licensed under the MIT License.
+### Firebase auth errors
 
-## Support
+- Ensure Authentication is enabled in Firebase Console
+- Enable Email/Password and Anonymous sign-in methods
+- Check that Firestore rules allow authenticated reads/writes
 
-For support and questions, please open an issue on GitHub or contact the development team.
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+---
+
+Built with ❤️ using Expo, FastAPI, Firebase, and Google Gemini
