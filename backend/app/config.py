@@ -1,10 +1,14 @@
 from pydantic_settings import BaseSettings
 from typing import List
+import os
+from dotenv import load_dotenv
 
+# Load variables from .env file
+load_dotenv()
 
 class Settings(BaseSettings):
     # Google Gemini (FREE!)
-    gemini_api_key: str = ""
+    gemini_api_key: str = os.getenv("GEMINI_API_KEY")
     
     # Firebase
     firebase_project_id: str = ""
@@ -21,6 +25,8 @@ class Settings(BaseSettings):
     class Config:
         env_file = ".env"
         extra = "ignore"
+        env_file_encoding = "utf-8"
+        case_sensitive = False
 
 
 settings = Settings()
